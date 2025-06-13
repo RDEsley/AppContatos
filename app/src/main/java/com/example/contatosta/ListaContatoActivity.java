@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -65,5 +67,26 @@ public class ListaContatoActivity extends AppCompatActivity {
         });
 
 
+
+
+    }
+
+    private void mostraDialogoExclusao(Contato contato){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ListaContatoActivity.this);
+        dialog.setTitle("Confirma a exclusão");
+        dialog.setMessage("Deseja excluir o contato:" + contato.getNomeContato()+ "?");
+        dialog.setPositiveButton("Sim", (dialogInteface,i) -> {
+            ContatoDAO contatoDAO = new ContatoDAO(getApplicationContext());
+            if(contatoDAO.excluir(contato)){
+                carregarListaContato();
+                Toast.makeText(ListaContatoActivity.this, "Sucesso ao excluir o registro",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(ListaContatoActivity.this, "Erro ao excluir o registro",Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.setNegativeButton("Não", null);
+        dialog.create();
+        dialog.show();
     }
 }
+
