@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -62,12 +65,14 @@ public class ListaContatoActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(Contato contato, int position) {
-
+                mostraDialogoExclusao(contato);
             }
         });
-
-
-
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerViewContatos.setLayoutManager(layoutManager);
+        recyclerViewContatos.setHasFixedSize(true);
+        recyclerViewContatos.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        recyclerViewContatos.setAdapter(contatoAdapter);
 
     }
 
